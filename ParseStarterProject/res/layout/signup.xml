@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:padding="10dip" >
+
+    <TextView
+        android:id="@+id/txtfirstname"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/Firstname" />
+
+    <EditText
+        android:id="@+id/firstname"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtfirstname"
+        android:imeOptions="actionSend|flagNoEnterAction"
+        android:inputType="text" />
+
+    <TextView
+        android:id="@+id/txtlastname"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/firstname"
+        android:text="@string/Lastname" />
+
+    <EditText
+        android:id="@+id/lastname"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtlastname"
+        android:imeOptions="actionSend|flagNoEnterAction"
+        android:inputType="text" />
+
+    <TextView
+        android:id="@+id/txtusername"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lastname"
+        android:text="@string/Username" />
+
+    <EditText
+        android:id="@+id/username"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtusername"
+        android:imeOptions="actionSend|flagNoEnterAction"
+        android:inputType="text" />
+
+    <TextView
+        android:id="@+id/txtpassword"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/username"
+        android:text="@string/Password" />
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtpassword"
+        android:imeOptions="actionSend|flagNoEnterAction"
+        android:inputType="textPassword" />
+
+    <TextView
+        android:id="@+id/txtMobile"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/password"
+        android:text="@string/Mobile" />
+
+    <EditText
+        android:id="@+id/mobilePhone"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtMobile"
+        android:imeOptions="actionSend|flagNoEnterAction"
+        android:inputType="phone" />
+
+    <Button
+        android:id="@+id/signup"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/mobilePhone"
+        android:text="@string/SignupBtn" />
+
+</RelativeLayout>
