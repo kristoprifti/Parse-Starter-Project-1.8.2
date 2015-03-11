@@ -3,9 +3,6 @@ package com.parse.starter;
 /**
  * Created by Kristi-PC on 2/17/2015.
  */
-import com.google.android.gms.maps.CameraUpdate;
-import com.google.android.gms.maps.GoogleMap;
-
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.DialogInterface;
@@ -21,15 +18,29 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseGeoPoint;
+import com.parse.ParseQuery;
 
-public class MapFragment extends Fragment implements LocationListener{
+import java.util.ArrayList;
+import java.util.List;
+
+public class MapFragment extends Fragment implements LocationListener, GoogleMap.OnMarkerClickListener {
 
     MapView mMapView;
     private GoogleMap googleMap;
+
+    public MapFragment() {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -55,7 +66,7 @@ public class MapFragment extends Fragment implements LocationListener{
         // Getting LocationManager object from System Service LOCATION_SERVICE
         LocationManager locationManager = (LocationManager) getActivity().getSystemService(getActivity().LOCATION_SERVICE);
 
-        if ( !locationManager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ) {
+        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             buildAlertMessageNoGps();
         }
 
@@ -69,7 +80,29 @@ public class MapFragment extends Fragment implements LocationListener{
         Location location = locationManager.getLastKnownLocation(provider);
         locationManager.requestLocationUpdates(provider, 20000, 0, this);
 
-        if(location!=null){
+        final ArrayList<Hairdressers> coordinates = new ArrayList<Hairdressers>();
+
+        ParseQuery<Hairdressers> query = ParseQuery.getQuery(Hairdressers.class);
+        query.findInBackground(new FindCallback<Hairdressers>() {
+            @Override
+            public void done(List<Hairdressers> results, ParseException e) {
+                for (Hairdressers a : results) {
+                    coordinates.add(a);
+                }
+                for (Hairdressers b : coordinates){
+                    ParseGeoPoint point = b.getLocation();
+                    MarkerOptions marker = new MarkerOptions().position(new LatLng(point.getLatitude(), point.getLongitude())).title(b.getName());
+
+                    //Changing marker icon
+                    marker.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+                    marker.snippet(b.getDescription());
+                    // adding marker
+                    googleMap.addMarker(marker);
+                }
+            }
+        });
+
+        if (location != null) {
             onLocationChanged(location);
         }
 
@@ -83,7 +116,7 @@ public class MapFragment extends Fragment implements LocationListener{
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
                         startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-                        Toast.makeText(getActivity().getApplicationContext(),"Getting your location...",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity().getApplicationContext(), "Getting your location...", Toast.LENGTH_LONG).show();
                     }
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -137,16 +170,6 @@ public class MapFragment extends Fragment implements LocationListener{
         // Zoom in the Google Map
         googleMap.animateCamera(CameraUpdateFactory.zoomTo(15));
 
-        /*MarkerOptions marker = new MarkerOptions().position(
-                new LatLng(latitude, longitude)).title("You are HERE!");
-
-        // Changing marker icon
-        marker.icon(BitmapDescriptorFactory
-                .defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
-
-        // adding marker
-        googleMap.addMarker(marker);*/
-
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(new LatLng(latitude, longitude)).zoom(15).build();
         googleMap.animateCamera(CameraUpdateFactory
@@ -166,5 +189,11 @@ public class MapFragment extends Fragment implements LocationListener{
     @Override
     public void onProviderDisabled(String provider) {
 
+    }
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+
+        return false;
     }
 }

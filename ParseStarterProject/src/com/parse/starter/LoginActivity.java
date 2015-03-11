@@ -4,19 +4,30 @@ package com.parse.starter;
  * Created by Kristi-PC on 2/17/2015.
  */
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.parse.FindCallback;
+import com.parse.FunctionCallback;
 import com.parse.LogInCallback;
+import com.parse.ParseCloud;
 import com.parse.ParseException;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
+
+import java.util.HashMap;
+import java.util.List;
 
 public class LoginActivity extends Activity {
     // Declare Variables
@@ -26,6 +37,7 @@ public class LoginActivity extends Activity {
     String passwordtxt;
     EditText password;
     EditText username;
+    String mobiletxt;
 
     /** Called when the activity is first created. */
     public void onCreate(Bundle savedInstanceState) {
@@ -54,15 +66,22 @@ public class LoginActivity extends Activity {
                             new LogInCallback() {
                                 public void done(ParseUser user, ParseException e) {
                                     if (user != null) {
+                                        boolean verified = user.getBoolean("verifiedPhone");
+                                        if(!verified){
+                                            showInputDialog();
+                                        }
                                         // If user exist and authenticated, send user to Welcome.class
-                                        Intent intent = new Intent(
-                                                LoginActivity.this,
-                                                LoggedInActivity.class);
-                                        startActivity(intent);
-                                        Toast.makeText(getApplicationContext(),
-                                                "Successfully Logged in",
-                                                Toast.LENGTH_LONG).show();
-                                        finish();
+                                        else{
+                                            Intent intent = new Intent(
+                                                    LoginActivity.this,
+                                                    LoggedInActivity.class);
+                                            startActivity(intent);
+                                            Toast.makeText(getApplicationContext(),
+                                                    "Successfully Logged in",
+                                                    Toast.LENGTH_LONG).show();
+                                            finish();
+                                        }
+
                                     } else {
                                         Toast.makeText(
                                                 getApplicationContext(),
@@ -101,5 +120,71 @@ public class LoginActivity extends Activity {
                 = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
+    private void showInputDialog() {
+        // get prompts.xml view
+        LayoutInflater layoutInflater = LayoutInflater.from(LoginActivity.this);
+        View promptView = layoutInflater.inflate(R.layout.verify_phone_dialog, null);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(LoginActivity.this);
+        alertDialogBuilder.setView(promptView);
+
+        final EditText verificationCode = (EditText) promptView.findViewById(R.id.verificationCode);
+        // setup a dialog window
+        alertDialogBuilder.setCancelable(false)
+                .setPositiveButton("Verify", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        if (verificationCode.getText().toString().isEmpty()) {
+                            showInputDialog();
+                            Toast.makeText(getApplicationContext(), "Enter your verification code!", Toast.LENGTH_LONG).show();
+                        } else {
+                            HashMap<String, Object> params = new HashMap<String, Object>();
+                            params.put("verCode", verificationCode.getText().toString());
+                            ParseCloud.callFunctionInBackground("verifyPhoneNumber", params, new FunctionCallback<String>() {
+                                public void done(String ratings, ParseException e) {
+                                    if (e == null) {
+                                        Intent intent = new Intent(LoginActivity.this, LoggedInActivity.class);
+                                        startActivity(intent);
+                                        Toast.makeText(getApplicationContext(), "Successfully Logged in", Toast.LENGTH_LONG).show();
+                                        finish();
+                                    } else {
+                                        Toast.makeText(getApplicationContext(), "Verification Code Error!", Toast.LENGTH_LONG).show();
+                                        showInputDialog();
+                                    }
+                                }
+                            });
+                        }
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                })
+                .setNeutralButton("Get New Code", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        ParseUser currentUser = ParseUser.getCurrentUser();
+                        if (currentUser != null) {
+                            // do stuff with the user
+                            mobiletxt = currentUser.getString("phoneNumber");
+                            HashMap<String, Object> params = new HashMap<String, Object>();
+                            params.put("number", mobiletxt);
+                            ParseCloud.callFunctionInBackground("sendVerificationCode", params, new FunctionCallback<String>() {
+                                public void done(String ratings, ParseException e) {
+                                    if (e == null) {
+                                        Toast.makeText(getApplicationContext(), "Verification Code Sent!", Toast.LENGTH_LONG).show();
+                                    }
+                                }
+                            });
+                            showInputDialog();
+                        } else {
+                            // show the signup or login screen
+                            Toast.makeText(getApplicationContext(), "Couldn't find your phone!", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+        // create an alert dialog
+        AlertDialog alert = alertDialogBuilder.create();
+        alert.show();
     }
 }

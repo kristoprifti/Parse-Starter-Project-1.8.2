@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Enter Verification Code"
+        android:id="@+id/textView"
+        android:layout_gravity="center"
+        android:autoText="false"
+        android:focusableInTouchMode="true"
+        android:gravity="center|center_horizontal"
+        android:inputType="phone" />
+
+    <EditText
+        android:id="@+id/verificationCode"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:hint="Verification Code Here"
+        android:padding="10dp"
+        android:layout_gravity="center"
+        android:focusableInTouchMode="true"
+        android:gravity="center|center_horizontal"
+        android:inputType="phone"
+        android:phoneNumber="true"
+        android:textStyle="bold"
+        android:typeface="normal" />
+
+</LinearLayout>
