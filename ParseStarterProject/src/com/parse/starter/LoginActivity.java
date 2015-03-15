@@ -18,16 +18,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.parse.FindCallback;
 import com.parse.FunctionCallback;
 import com.parse.LogInCallback;
 import com.parse.ParseCloud;
 import com.parse.ParseException;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.HashMap;
-import java.util.List;
 
 public class LoginActivity extends Activity {
     // Declare Variables
@@ -61,35 +58,45 @@ public class LoginActivity extends Activity {
 
                 if(isNetworkAvailable())
                 {
-                    // Send data to Parse.com for verification
-                    ParseUser.logInInBackground(usernametxt, passwordtxt,
-                            new LogInCallback() {
-                                public void done(ParseUser user, ParseException e) {
-                                    if (user != null) {
-                                        boolean verified = user.getBoolean("verifiedPhone");
-                                        if(!verified){
-                                            showInputDialog();
-                                        }
-                                        // If user exist and authenticated, send user to Welcome.class
-                                        else{
-                                            Intent intent = new Intent(
-                                                    LoginActivity.this,
-                                                    LoggedInActivity.class);
-                                            startActivity(intent);
-                                            Toast.makeText(getApplicationContext(),
-                                                    "Successfully Logged in",
-                                                    Toast.LENGTH_LONG).show();
-                                            finish();
-                                        }
+                    if(usernametxt.isEmpty() || passwordtxt.isEmpty())
+                    {
+                        Toast.makeText(getApplicationContext(),
+                                "Please complete the login form",
+                                Toast.LENGTH_LONG).show();
+                    }
+                    else
+                    {
+                        // Send data to Parse.com for verification
+                        ParseUser.logInInBackground(usernametxt, passwordtxt,
+                                new LogInCallback() {
+                                    public void done(ParseUser user, ParseException e) {
+                                        if (user != null) {
+                                            boolean verified = user.getBoolean("verifiedPhone");
+                                            if(!verified){
+                                                showInputDialog();
+                                            }
+                                            // If user exist and authenticated, send user to Welcome.class
+                                            else{
+                                                Intent intent = new Intent(
+                                                        LoginActivity.this,
+                                                        LoggedInActivity.class);
+                                                startActivity(intent);
+                                                Toast.makeText(getApplicationContext(),
+                                                        "Successfully Logged in",
+                                                        Toast.LENGTH_LONG).show();
+                                                finish();
+                                            }
 
-                                    } else {
-                                        Toast.makeText(
-                                                getApplicationContext(),
-                                                "No such user exist, please Sign Up",
-                                                Toast.LENGTH_LONG).show();
+                                        } else {
+                                            Toast.makeText(
+                                                    getApplicationContext(),
+                                                    "No such user exist, please Sign Up",
+                                                    Toast.LENGTH_LONG).show();
+                                        }
                                     }
-                                }
-                            });
+                                });
+                    }
+
                 }
                 else
                 {

@@ -1,0 +1,6 @@
+<resources>
+    <style name="MyAppTheme" parent="android:Theme.Holo.Light">
+        <!-- Change default text colour from dark grey to black -->
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+</resources>

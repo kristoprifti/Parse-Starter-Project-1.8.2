@@ -3,9 +3,6 @@ package com.parse.starter;
 /**
  * Created by Kristi-PC on 2/20/2015.
  */
-import com.parse.starter.R;
-import com.parse.starter.NavDrawerItem;
-
 import java.util.ArrayList;
 
 import android.app.Activity;

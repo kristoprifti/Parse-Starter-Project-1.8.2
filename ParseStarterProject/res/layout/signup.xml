@@ -1,89 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical"
-    android:padding="10dip" >
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".SignupActivity"
+    android:background="@drawable/ballon">
 
-    <TextView
-        android:id="@+id/txtfirstname"
+    <ScrollView android:id="@+id/MainForm"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/Firstname" />
+        android:layout_height="fill_parent"
+        android:fillViewport="true">
 
-    <EditText
-        android:id="@+id/firstname"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txtfirstname"
-        android:imeOptions="actionSend|flagNoEnterAction"
-        android:inputType="text" />
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/txtlastname"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/firstname"
-        android:text="@string/Lastname" />
+            <ImageView
+                android:layout_width="169dp"
+                android:layout_height="82dp"
+                android:id="@+id/logo"
+                android:src="@drawable/logo"
+                android:layout_gravity="center_horizontal"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="10dp"
+                android:layout_above="@+id/linearLayout2"
+                android:layout_marginBottom="30dp" />
 
-    <EditText
-        android:id="@+id/lastname"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txtlastname"
-        android:imeOptions="actionSend|flagNoEnterAction"
-        android:inputType="text" />
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/linearlayout_bg"
+                android:padding="10dp"
+                android:id="@+id/linearLayout2"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp">
 
-    <TextView
-        android:id="@+id/txtusername"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/lastname"
-        android:text="@string/Username" />
+                <EditText
+                    android:id="@+id/firstname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edittext_top_bg"
+                    android:padding="10dp"
+                    android:inputType="textPersonName"
+                    android:hint="First Name"
+                    android:singleLine="true" />
 
-    <EditText
-        android:id="@+id/username"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txtusername"
-        android:imeOptions="actionSend|flagNoEnterAction"
-        android:inputType="text" />
+                <EditText
+                    android:id="@+id/lastname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edittext_top_bg"
+                    android:padding="10dp"
+                    android:hint="Last Name"
+                    android:inputType="textPersonName"
+                    android:layout_marginTop="5dp"
+                    android:singleLine="true" />
 
-    <TextView
-        android:id="@+id/txtpassword"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/username"
-        android:text="@string/Password" />
+                <EditText
+                    android:id="@+id/username"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edittext_top_bg"
+                    android:padding="10dp"
+                    android:hint="Username"
+                    android:inputType="text"
+                    android:drawableLeft="@drawable/username"
+                    android:layout_marginTop="5dp"
+                    android:singleLine="true" />
 
-    <EditText
-        android:id="@+id/password"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txtpassword"
-        android:imeOptions="actionSend|flagNoEnterAction"
-        android:inputType="textPassword" />
+                <EditText
+                    android:id="@+id/password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edittext_top_bg"
+                    android:padding="10dp"
+                    android:hint="Password"
+                    android:inputType="textPassword"
+                    android:drawableLeft="@drawable/password"
+                    android:layout_marginTop="5dp"
+                    android:singleLine="true" />
 
-    <TextView
-        android:id="@+id/txtMobile"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/password"
-        android:text="@string/Mobile" />
+                <EditText
+                    android:id="@+id/mobilePhone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edittext_top_bg"
+                    android:padding="10dp"
+                    android:layout_marginTop="5dp"
+                    android:inputType="phone"
+                    android:hint="Mobile Phone"
+                    android:drawableLeft="@drawable/username"
+                    android:layout_marginBottom="10dp"
+                    android:singleLine="true" />
 
-    <EditText
-        android:id="@+id/mobilePhone"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txtMobile"
-        android:imeOptions="actionSend|flagNoEnterAction"
-        android:inputType="phone" />
+                <Button
+                    android:id="@+id/signup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="Sign Up"
+                    android:background="@drawable/button_default_bg"
+                    style="@style/DefaultButtonText"
+                    android:layout_marginTop="5dp" />
 
-    <Button
-        android:id="@+id/signup"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/mobilePhone"
-        android:text="@string/SignupBtn" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </RelativeLayout>

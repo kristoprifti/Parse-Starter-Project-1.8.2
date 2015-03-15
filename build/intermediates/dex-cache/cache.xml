@@ -2,6 +2,13 @@
 <items version="2" >
 
     <item
+        jar="C:\Users\Kristi-PC\.gradle\caches\modules-2\files-2.1\com.nineoldandroids\library\2.4.0\e9b63380f3a242dbdbf103a2355ad7e43bad17cb\library-2.4.0.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="e9b63380f3a242dbdbf103a2355ad7e43bad17cb">
+        <dex dex="C:\Users\Kristi-PC\AndroidStudioProjects\Parse-Starter-Project-1.8.2\ParseStarterProject\build\intermediates\pre-dexed\debug\library-2.4.0-667170025d37229e63944bdf7c5cba316c5f4ec0.jar" />
+    </item>
+    <item
         jar="C:\Users\Kristi-PC\AndroidStudioProjects\Parse-Starter-Project-1.8.2\ParseStarterProject\libs\Parse-1.8.2.jar"
         jumboMode="false"
         revision="21.1.1"
@@ -56,6 +63,13 @@
         revision="21.1.1"
         sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
         <dex dex="C:\Users\Kristi-PC\AndroidStudioProjects\Parse-Starter-Project-1.8.2\ParseStarterProject\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-0e664a24940f6522c0a3e684192e0afeb4637371.jar" />
+    </item>
+    <item
+        jar="C:\Users\Kristi-PC\AndroidStudioProjects\Parse-Starter-Project-1.8.2\ParseStarterProject\build\intermediates\exploded-aar\com.wrapp.floatlabelededittext\library\0.0.6\classes.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="0db8e1dc3097c0db8425b339e5e720ef6e918400">
+        <dex dex="C:\Users\Kristi-PC\AndroidStudioProjects\Parse-Starter-Project-1.8.2\ParseStarterProject\build\intermediates\pre-dexed\debug\classes-48c7031f9adb95712608ba2fc739d74d67a838b5.jar" />
     </item>
 
 </items>
